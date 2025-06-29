@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn about cryptocurrency prediction algorithms and market insights"
+    />
+    <title>CryptoPredikt - Blog & Insights</title>
+
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/stayles.css') }}"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>"
+    />
+
+    <style>
+      .blog-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .blog-header {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+
+      .blog-title {
+        font-size: 3rem;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 16px;
+      }
+
+      .blog-subtitle {
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 32px;
+        margin-bottom: 48px;
+      }
+
+      .article-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 0;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+
+      .article-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .article-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 20px 20px 0 0;
+      }
+
+      .article-content {
+        padding: 24px;
+      }
+
+      .article-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+
+      .article-excerpt {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      .article-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      .article-date {
+        font-weight: 500;
+      }
+
+      .article-tag {
+        background: var(--primary-color);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 48px;
+      }
+
+      .pagination-btn {
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        color: var(--text-primary);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .pagination-btn:hover:not(:disabled) {
+        background: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .featured-section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 32px;
+        margin-bottom: 48px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .featured-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 24px;
+        text-align: center;
+      }
+
+      .algorithm-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+      }
+
+      .algorithm-card {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 16px;
+        padding: 24px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+      }
+
+      .algorithm-card:hover {
+        border-color: var(--primary-color);
+        transform: translateY(-4px);
+      }
+
+      .algorithm-name {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 12px;
+      }
+
+      .algorithm-desc {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      @media (max-width: 768px) {
+        .blog-title {
+          font-size: 2rem;
+        }
+
+        .articles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .blog-container {
+          padding: 20px 16px;
+        }
+
+        .article-card,
+        .featured-section {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <nav class="header" role="navigation" aria-label="Main navigation">
+        <a href="/" class="logo" aria-label="CryptoPredikt Home">
+          📊 CryptoPredikt
+        </a>
+        <div class="header-right">
+          <a href="/">Home</a>
+          <a href="/info" aria-current="page">Blog</a>
+          <a href="#about">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="blog-container">
+      <!-- Blog Header -->
+      <section class="blog-header">
+        <h1 class="blog-title">Crypto Insights & Analysis</h1>
+        <p class="blog-subtitle">
+          Stay informed with the latest cryptocurrency trends, AI predictions,
+          and market analysis
+        </p>
+      </section>
+
+      <!-- Featured Section -->
+      <section class="featured-section">
+        <h2 class="featured-title">Our Prediction Algorithms</h2>
+        <div class="algorithm-grid">
+          <div class="algorithm-card">
+            <h3 class="algorithm-name">🧠 LSTM Neural Networks</h3>
+            <p class="algorithm-desc">
+              Long Short-Term Memory networks excel at learning patterns from
+              historical price data, making them ideal for cryptocurrency
+              prediction by capturing complex temporal dependencies.
+            </p>
+          </div>
+          <div class="algorithm-card">
+            <h3 class="algorithm-name">📈 ARIMA Time Series</h3>
+            <p class="algorithm-desc">
+              AutoRegressive Integrated Moving Average models provide robust
+              statistical forecasting by analyzing trends, seasonality, and
+              noise in cryptocurrency price movements.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Articles Grid -->
+      <section class="articles-grid" id="articles-container">
+        <article class="article-card fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&h=200&fit=crop"
+            alt="AI Trading"
+            class="article-image"
+          />
+          <div class="article-content">
+            <h3 class="article-title">
+              The Role of AI in Cryptocurrency Trading
+            </h3>
+            <p class="article-excerpt">
+              Explore how artificial intelligence is revolutionizing
+              cryptocurrency trading through advanced prediction algorithms and
+              automated decision-making systems.
+            </p>
+            <div class="article-meta">
+              <span class="article-date">Dec 15, 2024</span>
+              <span class="article-tag">AI & ML</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=400&h=200&fit=crop"
+            alt="Blockchain Analysis"
+            class="article-image"
+          />
+          <div class="article-content">
+            <h3 class="article-title">
+              Understanding Market Volatility in Crypto
+            </h3>
+            <p class="article-excerpt">
+              Learn about the factors that drive cryptocurrency price volatility
+              and how our prediction models account for these market dynamics.
+            </p>
+            <div class="article-meta">
+              <span class="article-date">Dec 10, 2024</span>
+              <span class="article-tag">Market Analysis</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=200&fit=crop"
+            alt="Neural Networks"
+            class="article-image"
+          />
+          <div class="article-content">
+            <h3 class="article-title">LSTM vs ARIMA: Which Predicts Better?</h3>
+            <p class="article-excerpt">
+              A comprehensive comparison of Long Short-Term Memory networks and
+              ARIMA models for cryptocurrency price prediction accuracy.
+            </p>
+            <div class="article-meta">
+              <span class="article-date">Dec 5, 2024</span>
+              <span class="article-tag">Technical</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=200&fit=crop"
+            alt="Bitcoin Analysis"
+            class="article-image"
+          />
+          <div class="article-content">
+            <h3 class="article-title">
+              Bitcoin Price Patterns and Predictions
+            </h3>
+            <p class="article-excerpt">
+              Dive deep into Bitcoin's historical price patterns and discover
+              how machine learning identifies recurring trends for future
+              predictions.
+            </p>
+            <div class="article-meta">
+              <span class="article-date">Nov 28, 2024</span>
+              <span class="article-tag">Bitcoin</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1621761191319-c6fd1f835042?w=400&h=200&fit=crop"
+            alt="Data Science"
+            class="article-image"
+          />
+          <div class="article-content">
+            <h3 class="article-title">
+              Feature Engineering for Crypto Prediction
+            </h3>
+            <p class="article-excerpt">
+              Learn about the key features and data preprocessing techniques
+              that improve the accuracy of cryptocurrency price prediction
+              models.
+            </p>
+            <div class="article-meta">
+              <span class="article-date">Nov 20, 2024</span>
+              <span class="article-tag">Data Science</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="article-card fade-in">
+          <img
+            src="https://images.unsplash.com/photo-1640340434855-6084b1f4901c?w=400&h=200&fit=crop"
+            alt="Risk Management"
+            class="article-image"
+          />
+          <div class="article-content">
+            <h3 class="article-title">Risk Management in Crypto Investments</h3>
+            <p class="article-excerpt">
+              Understand how to use prediction models responsibly and implement
+              proper risk management strategies in cryptocurrency investing.
+            </p>
+            <div class="article-meta">
+              <span class="article-date">Nov 15, 2024</span>
+              <span class="article-tag">Risk Management</span>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- Pagination -->
+      <nav class="pagination" aria-label="Blog pagination">
+        <button class="pagination-btn" id="prevBtn" aria-label="Previous page">
+          ← Previous
+        </button>
+        <span class="pagination-info" id="pageInfo">Page 1 of 2</span>
+        <button class="pagination-btn" id="nextBtn" aria-label="Next page">
+          Next →
+        </button>
+      </nav>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="mt-4 text-center"
+      style="padding: 20px; color: rgba(255, 255, 255, 0.8)"
+    >
+      <p>
+        &copy; 2025 CryptoPredikt. Advanced AI-powered cryptocurrency
+        predictions.
+      </p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const articles = document.querySelectorAll(".article-card");
+        const articlesPerPage = 6;
+        let currentPage = 1;
+        const totalPages = Math.ceil(articles.length / articlesPerPage);
+
+        function showPage(pageNumber) {
+          const startIndex = (pageNumber - 1) * articlesPerPage;
+          const endIndex = startIndex + articlesPerPage;
+
+          articles.forEach((article, index) => {
+            if (index >= startIndex && index < endIndex) {
+              article.style.display = "block";
+              article.classList.add("fade-in");
+            } else {
+              article.style.display = "none";
+            }
+          });
+
+          // Update pagination info
+          document.getElementById(
+            "pageInfo"
+          ).textContent = `Page ${pageNumber} of ${totalPages}`;
+
+          // Update button states
+          document.getElementById("prevBtn").disabled = pageNumber === 1;
+          document.getElementById("nextBtn").disabled =
+            pageNumber === totalPages;
+        }
+
+        function changePage(delta) {
+          const newPage = currentPage + delta;
+          if (newPage >= 1 && newPage <= totalPages) {
+            currentPage = newPage;
+            showPage(currentPage);
+
+            // Smooth scroll to top of articles
+            document.getElementById("articles-container").scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        }
+
+        // Event listeners
+        document
+          .getElementById("prevBtn")
+          .addEventListener("click", () => changePage(-1));
+        document
+          .getElementById("nextBtn")
+          .addEventListener("click", () => changePage(1));
+
+        // Initialize
+        showPage(currentPage);
+
+        // Animate articles on scroll
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("slide-up");
+            }
+          });
+        });
+
+        articles.forEach((article) => {
+          observer.observe(article);
+        });
+      });
+    </script>
+  </body>
+</html>

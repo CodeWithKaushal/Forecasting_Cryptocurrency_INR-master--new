@@ -1,0 +1,51 @@
+Channels:
+ - pytorch
+ - defaults
+Platform: win-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: C:\Users\KAUSHAL\anaconda3\envs\c_new
+
+  added / updated specs:
+    - requests
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    brotlipy-0.7.0             |py36h2bbff1b_1003         337 KB
+    cffi-1.14.6                |   py36h2bbff1b_0         221 KB
+    charset-normalizer-2.0.4   |     pyhd3eb1b0_0          35 KB
+    cryptography-35.0.0        |   py36h71e12ea_0         988 KB
+    idna-3.3                   |     pyhd3eb1b0_0          49 KB
+    openssl-1.1.1w             |       h2bbff1b_0         5.5 MB
+    pyopenssl-22.0.0           |     pyhd3eb1b0_0          50 KB
+    pysocks-1.7.1              |   py36haa95532_0          31 KB
+    requests-2.27.1            |     pyhd3eb1b0_0          54 KB
+    urllib3-1.26.8             |     pyhd3eb1b0_0         106 KB
+    win_inet_pton-1.1.0        |   py36haa95532_0          35 KB
+    ------------------------------------------------------------
+                                           Total:         7.4 MB
+
+The following NEW packages will be INSTALLED:
+
+  brotlipy           pkgs/main/win-64::brotlipy-0.7.0-py36h2bbff1b_1003 
+  ca-certificates    pkgs/main/win-64::ca-certificates-2025.2.25-haa95532_0 
+  cffi               pkgs/main/win-64::cffi-1.14.6-py36h2bbff1b_0 
+  charset-normalizer pkgs/main/noarch::charset-normalizer-2.0.4-pyhd3eb1b0_0 
+  cryptography       pkgs/main/win-64::cryptography-35.0.0-py36h71e12ea_0 
+  idna               pkgs/main/noarch::idna-3.3-pyhd3eb1b0_0 
+  openssl            pkgs/main/win-64::openssl-1.1.1w-h2bbff1b_0 
+  pycparser          pkgs/main/noarch::pycparser-2.21-pyhd3eb1b0_0 
+  pyopenssl          pkgs/main/noarch::pyopenssl-22.0.0-pyhd3eb1b0_0 
+  pysocks            pkgs/main/win-64::pysocks-1.7.1-py36haa95532_0 
+  requests           pkgs/main/noarch::requests-2.27.1-pyhd3eb1b0_0 
+  urllib3            pkgs/main/noarch::urllib3-1.26.8-pyhd3eb1b0_0 
+  win_inet_pton      pkgs/main/win-64::win_inet_pton-1.1.0-py36haa95532_0 
+
+
+Proceed ([y]/n)? 

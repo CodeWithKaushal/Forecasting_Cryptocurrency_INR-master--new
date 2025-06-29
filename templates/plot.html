@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Advanced cryptocurrency price prediction using LSTM and ARIMA algorithms"
+    />
+    <title>CryptoPredikt - Advanced Cryptocurrency Prediction</title>
+
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/stayles.css') }}"
+    />
+
+    <!-- External Scripts -->
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>"
+    />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <nav class="header" role="navigation" aria-label="Main navigation">
+        <a href="/" class="logo" aria-label="CryptoPredikt Home">
+          📈 CryptoPredikt
+        </a>
+        <div class="header-right">
+          <a href="/" aria-current="page">Home</a>
+          <a href="/info">Blog</a>
+          <a href="#about">About</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+      <!-- Control Panel -->
+      <section class="control-panel" aria-labelledby="control-title">
+        <h1 id="control-title" class="panel-title">
+          Advanced Cryptocurrency Price Prediction
+        </h1>
+
+        <form class="control-form" onsubmit="return false;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ticker" class="form-label">Cryptocurrency</label>
+              <select
+                name="ticker"
+                id="ticker"
+                class="form-select"
+                aria-describedby="ticker-help"
+              >
+                <option value="BTC-USD">Bitcoin (BTC-USD)</option>
+                <option value="ETH-USD">Ethereum (ETH-USD)</option>
+                <option value="LTC-USD">Litecoin (LTC-USD)</option>
+                <option value="BNB-USD">Binance Coin (BNB-USD)</option>
+                <option value="ADA-USD">Cardano (ADA-USD)</option>
+                <option value="DOGE-USD">Dogecoin (DOGE-USD)</option>
+                <option value="MATIC-USD">Polygon (MATIC-USD)</option>
+                <option value="SOL-USD">Solana (SOL-USD)</option>
+                <option value="AVAX-USD">Avalanche (AVAX-USD)</option>
+                <option value="DOT-USD">Polkadot (DOT-USD)</option>
+                <option value="LINK-USD">Chainlink (LINK-USD)</option>
+                <option value="UNI-USD">Uniswap (UNI-USD)</option>
+                <option value="XRP-USD">Ripple (XRP-USD)</option>
+                <option value="ALGO-USD">Algorand (ALGO-USD)</option>
+              </select>
+              <small id="ticker-help" class="form-help"
+                >Select the cryptocurrency to predict</small
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="type" class="form-label">Algorithm</label>
+              <select
+                name="type"
+                id="type"
+                class="form-select"
+                aria-describedby="algo-help"
+              >
+                <option value="LSTM">LSTM Neural Network</option>
+                <option value="ARIMA">ARIMA Time Series</option>
+              </select>
+              <small id="algo-help" class="form-help"
+                >Choose prediction algorithm</small
+              >
+            </div>
+          </div>
+
+          <div class="btn-container">
+            <button
+              type="button"
+              onclick="show_plot()"
+              class="btn btn-primary"
+              aria-describedby="predict-help"
+            >
+              Generate Prediction
+            </button>
+          </div>
+          <small id="predict-help" class="form-help text-center">
+            Generate AI-powered price predictions for the next 24 hours
+          </small>
+        </form>
+      </section>
+
+      <!-- Loading Spinner -->
+      <div class="loader-container">
+        <div
+          class="loader"
+          id="loader"
+          aria-label="Loading prediction"
+          role="status"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+
+      <!-- Chart Container -->
+      <section class="chart-container" aria-labelledby="chart-title">
+        <h2 id="chart-title" class="sr-only">Price Prediction Chart</h2>
+        <div class="chart-wrapper">
+          <div
+            id="chartContainer"
+            aria-label="Interactive price prediction chart"
+          ></div>
+          <div class="chart-overlay">
+            <div class="loading-content">
+              <div class="loading-spinner"></div>
+              <div class="loading-text">Generating Chart...</div>
+              <div class="loading-subtext">Please wait while we process your data</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Info Panel -->
+      <section class="info-panel" aria-labelledby="info-title">
+        <h2 id="info-title" class="sr-only">Prediction Statistics</h2>
+        <!-- Dynamic content will be inserted here -->
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="mt-4 text-center"
+      style="padding: 20px; color: rgba(255, 255, 255, 0.8)"
+    >
+      <p>
+        &copy; 2025 CryptoPredikt. Advanced AI-powered cryptocurrency
+        predictions.
+      </p>
+    </footer>
+
+    <!-- Enhanced Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Processing Prediction</div>
+        <div class="loading-subtext">
+          Analyzing historical data and generating forecasts...
+        </div>
+        <div class="loading-progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    <!-- Screen reader only content -->
+    <div class="sr-only">
+      <p>
+        This application provides cryptocurrency price predictions using machine
+        learning algorithms.
+      </p>
+    </div>
+  </body>
+</html>
